@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7230273552283489427
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 637114070095761831, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_Name
+      value: AITank
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+--- !u!1 &4327834846421291053 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6366006986093216958, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4527311740831905410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6522102273680597521, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7780140347549451653 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1130274933111050518, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7818368404707099956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 637114070095761831, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3207137008872673896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818368404707099956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fadafd11875090c80810b6c1808f4de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  target: {fileID: 0}
+  targetVisible: 0
+  cannonElevation: {fileID: 4527311740831905410}
+  cannonRotation: {fileID: 4327834846421291053}
+  FiringPoint: {fileID: 7780140347549451653}
+  Shell: {fileID: 8150672806571139714, guid: a5d339946511a23089ddb186cd2b8adc, type: 3}
+  turretMoveRate: 15
+  azimuthGoal: 0
+  elevationGoal: -15
