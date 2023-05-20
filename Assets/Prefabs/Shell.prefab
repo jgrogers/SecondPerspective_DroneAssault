@@ -127,9 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e585a1538ed36dfa40e8973cca8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SafeMask:
-    serializedVersion: 2
-    m_Bits: 384
+  SafeMask: 0
   TargetMask:
     serializedVersion: 2
     m_Bits: 192
+  ImpulseAmount: 30
+  Lifespan: 10
+  explosionEffect: {fileID: 3073035203868570837, guid: fdf4e4f2951beb3ac88ee4952aa18417, type: 3}

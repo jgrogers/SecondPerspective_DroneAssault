@@ -17,7 +17,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
-        cannonRotation.transform.localRotation = Quaternion.Euler(elevation, azimuth, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
         fireControl = GetComponent<FireControl>();
  
     }
@@ -42,24 +43,29 @@ public class PlayerControl : MonoBehaviour
        }
        if (Input.GetKey(KeyCode.Q)) {
         azimuth -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(elevation, azimuth, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.E)) {
         azimuth += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(elevation, azimuth, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.LeftShift)) {
         elevation -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(elevation, azimuth, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.LeftControl)) {
         elevation += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(elevation, azimuth, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
        }
         if (Input.GetKey(KeyCode.Space)) {
           if (fireControl.Fire()) {
             Debug.Log("Firing shell!");
-            Instantiate(Shell, FiringPoint.position, FiringPoint.rotation);
+            GameObject shell = Instantiate(Shell, FiringPoint.position, FiringPoint.rotation);
+            shell.GetComponent<Shell>().SetSafeMask(gameObject.layer);
           } 
        }
 

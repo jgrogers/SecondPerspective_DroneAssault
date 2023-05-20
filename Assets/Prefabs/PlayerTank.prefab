@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -98,6 +98,10 @@ PrefabInstance:
     - target: {fileID: 637114070095761831, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 637114070095761831, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_TagString
+      value: Allies
       objectReference: {fileID: 0}
     - target: {fileID: 1433690869674965497, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_Layer

@@ -11,21 +11,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: AITank
       objectReference: {fileID: 0}
+    - target: {fileID: 637114070095761831, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 220.45982
       objectReference: {fileID: 0}
     - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 50.44
       objectReference: {fileID: 0}
     - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 208.51218
       objectReference: {fileID: 0}
     - target: {fileID: 3790418015019881283, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
       propertyPath: m_LocalRotation.w
@@ -98,6 +102,8 @@ MonoBehaviour:
   cannonRotation: {fileID: 4327834846421291053}
   FiringPoint: {fileID: 7780140347549451653}
   Shell: {fileID: 8150672806571139714, guid: a5d339946511a23089ddb186cd2b8adc, type: 3}
-  turretMoveRate: 15
+  turretMoveRate: 1
+  azimuth: 0
+  elevation: -15
   azimuthGoal: 0
   elevationGoal: -15
