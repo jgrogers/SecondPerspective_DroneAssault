@@ -56,27 +56,20 @@ public class PlayerControl : MonoBehaviour
       foreach(WheelCollider wheel in rightTracks) {
         wheel.motorTorque = rightTorque;
       }
-      Debug.Log("Left " + leftTorque + " Right " + rightTorque);
        if (Input.GetKey(KeyCode.Q)) {
         azimuth -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.E)) {
         azimuth += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f,azimuth);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.LeftShift)) {
-        elevation -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
+        elevation += turretMoveRate * Time.deltaTime;
        }
        if (Input.GetKey(KeyCode.LeftControl)) {
-        elevation += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
+        elevation -= turretMoveRate * Time.deltaTime;
        }
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, elevation);
         if (Input.GetKey(KeyCode.Space)) {
           if (fireControl.Fire()) {
             Debug.Log("Firing shell!");

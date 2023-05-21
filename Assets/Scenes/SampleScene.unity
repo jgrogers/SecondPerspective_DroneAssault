@@ -130,13 +130,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1741705066, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
+      propertyPath: motorTorque
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 564727259501754095, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
       propertyPath: m_Name
       value: PlayerTank
-      objectReference: {fileID: 0}
-    - target: {fileID: 564727259501754095, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
-      propertyPath: m_TagString
-      value: Ally
       objectReference: {fileID: 0}
     - target: {fileID: 4295148399526851595, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
       propertyPath: m_RootOrder
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4295148399526851595, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50.350056
+      value: 50.02
       objectReference: {fileID: 0}
     - target: {fileID: 4295148399526851595, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -305,6 +305,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3207137008872673896, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
       propertyPath: hostile
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3207137008872673896, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
+      propertyPath: ErrorRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -3207137008872673896, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
+      propertyPath: detectionRange
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -3207137008872673896, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
+      propertyPath: learnedDistanceScale
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: -3207137008872673896, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
+      propertyPath: learnedVelocityModifier
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5822400495045707728, guid: fd67471b3b7bbf6289f862e527a25536, type: 3}
@@ -599,6 +615,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &1708860438 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4295148399526851595, guid: f6eaa4bf3131bbf21936d5b38ea3aab5, type: 3}
+  m_PrefabInstance: {fileID: 239689653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1713192583
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,5 +810,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8412122838056468012, guid: 7d83d26b96c71cd8c8407ca24879129b, type: 3}
+      propertyPath: Mothership
+      value: 
+      objectReference: {fileID: 1708860438}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d83d26b96c71cd8c8407ca24879129b, type: 3}

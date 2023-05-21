@@ -30,7 +30,6 @@ public class Shell : MonoBehaviour
             OnTriggerEnter(hit.collider);
         }
         lastPhysicsPosition = transform.position;
-        Debug.Log("Shell velocity : " + myRigidbody.velocity.magnitude);
     }
 
     private void OnTriggerEnter(Collider other) {

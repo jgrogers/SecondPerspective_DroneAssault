@@ -19,9 +19,12 @@ public class AIControl : MonoBehaviour
     [SerializeField] private float azimuthGoal = 0.0f;
     [SerializeField] private float elevationGoal = -15.0f;
     [SerializeField] private float detectionRange = 10.0f;
+    [SerializeField] private Transform sensorPoint;
     private FireControl fireControl;
     [SerializeField] private bool hostile = false;
     [SerializeField] private float learnedDistanceScale = 1.0f;
+    [SerializeField] private float ErrorRadius = 15.0f;
+    [SerializeField] private Vector2 currentError;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +32,11 @@ public class AIControl : MonoBehaviour
         cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
         cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
         fireControl = GetComponent<FireControl>();
- 
+        SampleDistanceError();
+    }
+    private void SampleDistanceError() {
+        currentError = Random.insideUnitCircle * ErrorRadius;
+        
     }
     // Update is called once per frame
     void Update()
@@ -44,13 +51,14 @@ public class AIControl : MonoBehaviour
             //Try to find targets
             foreach (GameObject allyTeamMember in GameManager.Instance.PlayerTeam) {
                 Vector3 direction = allyTeamMember.transform.position - transform.position;
-                Debug.DrawRay(transform.position, direction);
-                if (Physics.Raycast(transform.position, direction, out RaycastHit hit, detectionRange)) {
+                Debug.DrawRay(sensorPoint.position, direction);
+                if (Physics.Raycast(sensorPoint.position, direction, out RaycastHit hit, detectionRange)) {
                     if (hit.transform == allyTeamMember.transform) {
                         target = allyTeamMember;
                         Debug.Log("Found target " + target);
                         break;
                     } else {
+                        Debug.Log("Trying to get target but hit " + hit.transform);
                     }
                 }
             }
@@ -61,7 +69,8 @@ public class AIControl : MonoBehaviour
         if (target) {
             // Check raycast to see if target is still visible
             Vector3 direction = target.transform.position - transform.position;
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity)) {
+            Vector3 localDirection = transform.InverseTransformDirection(direction);
+            if (Physics.Raycast(sensorPoint.position, direction, out RaycastHit hit, Mathf.Infinity)) {
                 if (hit.transform == target.transform) {
                     targetVisible = true;
                 } else {
@@ -69,9 +78,10 @@ public class AIControl : MonoBehaviour
                 }
             }
             if (targetVisible) {
-                float dx = target.transform.position.x - transform.position.x;
-                float dy = target.transform.position.y - transform.position.y;
-                float dz = target.transform.position.z - transform.position.z;
+                
+                float dx = localDirection.x + currentError.x;
+                float dy = localDirection.y;
+                float dz = localDirection.z + currentError.y;
                 azimuthGoal = Mathf.Rad2Deg * Mathf.Atan2(dx, dz);
                 float horiz_dist = learnedDistanceScale * Mathf.Sqrt(dx*dx + dz*dz);
 //                elevationGoal = Mathf.Rad2Deg * (Mathf.Atan2(dy, horiz_dist) - elevationAimGain * horiz_dist);
@@ -79,9 +89,9 @@ public class AIControl : MonoBehaviour
                 if (asin_value >= 1.0f || asin_value < 0) targetInRange = false;
                 else targetInRange = true;
                 if(targetInRange) {
-                    elevationGoal = Mathf.Rad2Deg * (-0.5f * Mathf.Asin(horiz_dist * 9.81f / (30.0f * 30.0f)));
+                    elevationGoal = Mathf.Rad2Deg * (0.5f * Mathf.Asin(horiz_dist * 9.81f / (30.0f * 30.0f)));
                 } else {
-                    elevationGoal = -45.0f;
+                    elevationGoal = 45.0f;
                 }
             } else {
                 Debug.Log("I'd move towards target");
@@ -117,13 +127,14 @@ public class AIControl : MonoBehaviour
             elevation += dElevation;
             onTarget = false;
         }
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  azimuth, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, elevation);
         if (targetInRange && targetVisible && onTarget && hostile) {
             if (fireControl.Fire()) {
                 Debug.Log("Firing shell!");
                 GameObject shell = Instantiate(Shell, FiringPoint.position, FiringPoint.rotation);
                 shell.GetComponent<Shell>().SetSafeMask(gameObject.layer);
+                SampleDistanceError();
             } 
         }
     }

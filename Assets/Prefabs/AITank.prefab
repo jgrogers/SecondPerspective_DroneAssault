@@ -61,19 +61,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
---- !u!1 &4327834846421291053 stripped
+--- !u!1 &710957943430181679 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6366006986093216958, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7893335733575329724, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4527311740831905410 stripped
+--- !u!1 &2545901265827415061 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6522102273680597521, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5117158772231245958, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7780140347549451653 stripped
+--- !u!4 &4957777227199531959 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1130274933111050518, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2349339011115228964, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7314783749544742076 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 131803322346133551, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7818368404707099956 stripped
@@ -98,12 +103,17 @@ MonoBehaviour:
     m_Bits: 128
   target: {fileID: 0}
   targetVisible: 0
-  cannonElevation: {fileID: 4527311740831905410}
-  cannonRotation: {fileID: 4327834846421291053}
-  FiringPoint: {fileID: 7780140347549451653}
+  targetInRange: 0
+  cannonElevation: {fileID: 2545901265827415061}
+  cannonRotation: {fileID: 710957943430181679}
+  FiringPoint: {fileID: 4957777227199531959}
   Shell: {fileID: 8150672806571139714, guid: a5d339946511a23089ddb186cd2b8adc, type: 3}
   turretMoveRate: 1
   azimuth: 0
   elevation: -15
   azimuthGoal: 0
   elevationGoal: -15
+  detectionRange: 10
+  sensorPoint: {fileID: 7314783749544742076}
+  hostile: 1
+  learnedDistanceScale: 1
