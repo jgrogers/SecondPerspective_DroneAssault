@@ -61,9 +61,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+--- !u!146 &138660676566173909 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 7330602740412357702, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &645747590711755243 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 7827607445633635704, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &710957943430181679 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7893335733575329724, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &1019270179829642785 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 7670258712369865394, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &2534152067862227370 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 5151003747182034233, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2545901265827415061 stripped
@@ -71,9 +91,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5117158772231245958, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
+--- !u!146 &3321979588575868056 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 5353968144386613259, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &3924283546579041105 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 5918517594465415106, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4957777227199531959 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2349339011115228964, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &5342270685909291039 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 3347469329734648972, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &6554061667819683443 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 4513630610776337120, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &6802806593463857905 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 4197209653687051874, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
   m_PrefabInstance: {fileID: 7230273552283489427}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7314783749544742076 stripped
@@ -108,12 +153,33 @@ MonoBehaviour:
   cannonRotation: {fileID: 710957943430181679}
   FiringPoint: {fileID: 4957777227199531959}
   Shell: {fileID: 8150672806571139714, guid: a5d339946511a23089ddb186cd2b8adc, type: 3}
+  leftTracks:
+  - {fileID: 8613643574299037701}
+  - {fileID: 3924283546579041105}
+  - {fileID: 138660676566173909}
+  - {fileID: 1019270179829642785}
+  - {fileID: 5342270685909291039}
+  rightTracks:
+  - {fileID: 6802806593463857905}
+  - {fileID: 6554061667819683443}
+  - {fileID: 3321979588575868056}
+  - {fileID: 2534152067862227370}
+  - {fileID: 645747590711755243}
+  motorTorque: 150
   turretMoveRate: 1
   azimuth: 0
   elevation: -15
   azimuthGoal: 0
   elevationGoal: -15
-  detectionRange: 10
+  detectionRange: 50
   sensorPoint: {fileID: 7314783749544742076}
   hostile: 1
-  learnedDistanceScale: 1
+  learnedDistanceScale: 0.95
+  ErrorRadius: 5
+  currentError: {x: 0, y: 0}
+  goalPoint: {fileID: 0}
+--- !u!146 &8613643574299037701 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 1431819558438159510, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}
+  m_PrefabInstance: {fileID: 7230273552283489427}
+  m_PrefabAsset: {fileID: 0}
