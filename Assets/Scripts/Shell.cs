@@ -10,10 +10,12 @@ public class Shell : MonoBehaviour
     [SerializeField] private float Lifespan = 10.0f;
     [SerializeField] private ParticleSystem explosionEffect;
     private Vector3 lastPhysicsPosition;
+    private Rigidbody myRigidbody;
     // Start is called before the first frame update
     void Start()
     {
-       GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * ImpulseAmount, ForceMode.Impulse); 
+       myRigidbody = GetComponent<Rigidbody>();
+       myRigidbody.AddRelativeForce(Vector3.forward * ImpulseAmount, ForceMode.Impulse); 
        lastPhysicsPosition = transform.position;
     }
     void FixedUpdate() {
@@ -28,6 +30,7 @@ public class Shell : MonoBehaviour
             OnTriggerEnter(hit.collider);
         }
         lastPhysicsPosition = transform.position;
+        Debug.Log("Shell velocity : " + myRigidbody.velocity.magnitude);
     }
 
     private void OnTriggerEnter(Collider other) {

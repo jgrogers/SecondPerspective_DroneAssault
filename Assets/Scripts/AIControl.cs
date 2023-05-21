@@ -8,6 +8,7 @@ public class AIControl : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private GameObject target = null;
     [SerializeField] private bool targetVisible = false;
+    [SerializeField] private bool targetInRange = false;
     [SerializeField] private GameObject cannonElevation;
     [SerializeField] private GameObject cannonRotation;
     [SerializeField] private Transform FiringPoint;
@@ -20,6 +21,7 @@ public class AIControl : MonoBehaviour
     [SerializeField] private float detectionRange = 10.0f;
     private FireControl fireControl;
     [SerializeField] private bool hostile = false;
+    [SerializeField] private float learnedDistanceScale = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +73,16 @@ public class AIControl : MonoBehaviour
                 float dy = target.transform.position.y - transform.position.y;
                 float dz = target.transform.position.z - transform.position.z;
                 azimuthGoal = Mathf.Rad2Deg * Mathf.Atan2(dx, dz);
-                elevationGoal = Mathf.Rad2Deg * Mathf.Atan2(dy, Mathf.Sqrt(dx*dx + dz*dz));
+                float horiz_dist = learnedDistanceScale * Mathf.Sqrt(dx*dx + dz*dz);
+//                elevationGoal = Mathf.Rad2Deg * (Mathf.Atan2(dy, horiz_dist) - elevationAimGain * horiz_dist);
+                float asin_value = horiz_dist * 9.81f / (30.0f * 30.0f);
+                if (asin_value >= 1.0f || asin_value < 0) targetInRange = false;
+                else targetInRange = true;
+                if(targetInRange) {
+                    elevationGoal = Mathf.Rad2Deg * (-0.5f * Mathf.Asin(horiz_dist * 9.81f / (30.0f * 30.0f)));
+                } else {
+                    elevationGoal = -45.0f;
+                }
             } else {
                 Debug.Log("I'd move towards target");
             }
@@ -108,7 +119,7 @@ public class AIControl : MonoBehaviour
         }
         cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
         cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
-        if (targetVisible && onTarget && hostile) {
+        if (targetInRange && targetVisible && onTarget && hostile) {
             if (fireControl.Fire()) {
                 Debug.Log("Firing shell!");
                 GameObject shell = Instantiate(Shell, FiringPoint.position, FiringPoint.rotation);

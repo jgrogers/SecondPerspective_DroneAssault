@@ -10,15 +10,18 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform FiringPoint;
     [SerializeField] private GameObject Shell;
     [SerializeField] private float turretMoveRate = 15.0f;
+    [SerializeField] private WheelCollider[] leftTracks;
+    [SerializeField] private WheelCollider[] rightTracks;
     private float azimuth = 0.0f;
-    private float elevation = -15.0f;
+    private float elevation = 15.0f;
     private FireControl fireControl;
+    [SerializeField] private float motorTorque = 150.0f;
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
         cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation -90f, 0.0f, 0.0f);
         fireControl = GetComponent<FireControl>();
  
     }
@@ -29,37 +32,50 @@ public class PlayerControl : MonoBehaviour
         
     }
     private void FixedUpdate() {
-       if (Input.GetKey(KeyCode.W)) {
-         myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, 15.0f));
-       }
-       if (Input.GetKey(KeyCode.S)) {
-        myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, -15.0f));
-       }
-       if (Input.GetKey(KeyCode.A)) {
-        myRigidbody.AddRelativeTorque(new Vector3(0.0f, -18.0f, 0.0f));
-       }
-       if (Input.GetKey(KeyCode.D)) {
-        myRigidbody.AddRelativeTorque(new Vector3(0.0f, 18.0f, 0.0f));
-       }
+      float leftTorque = 0.0f;
+      float rightTorque = 0.0f;
+      if (Input.GetKey(KeyCode.W)) {
+        leftTorque = motorTorque;
+        rightTorque = motorTorque;
+      }
+      if (Input.GetKey(KeyCode.S)) {
+        leftTorque = -motorTorque;
+        rightTorque = -motorTorque;
+      }
+      if (Input.GetKey(KeyCode.A)) {
+        leftTorque = -motorTorque;
+        rightTorque = motorTorque;
+      }
+      if (Input.GetKey(KeyCode.D)) {
+        leftTorque = motorTorque;
+        rightTorque = -motorTorque;
+      }
+      foreach(WheelCollider wheel in leftTracks) {
+        wheel.motorTorque = leftTorque;
+      }
+      foreach(WheelCollider wheel in rightTracks) {
+        wheel.motorTorque = rightTorque;
+      }
+      Debug.Log("Left " + leftTorque + " Right " + rightTorque);
        if (Input.GetKey(KeyCode.Q)) {
         azimuth -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.E)) {
         azimuth += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f,azimuth);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.LeftShift)) {
         elevation -= turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
        if (Input.GetKey(KeyCode.LeftControl)) {
         elevation += turretMoveRate * Time.deltaTime;
-        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
-        cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
+        cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  0.0f, azimuth);
+        cannonElevation.transform.localRotation = Quaternion.Euler(elevation - 90f, 0.0f, 0.0f);
        }
         if (Input.GetKey(KeyCode.Space)) {
           if (fireControl.Fire()) {
