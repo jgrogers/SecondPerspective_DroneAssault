@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class PatrolPaths : MonoBehaviour
 {
-    [SerializeField] private List<Vector3>[] patrol_paths;
-    static public PatrolPaths Instance {get; private set;}
+    public static PatrolPaths Instance { get; private set; }
+    [System.Serializable]
+    public struct PatrolPath {
+        public List<Transform> waypoints;
+    }
+    [SerializeField] private PatrolPath[] patrol_paths;
+    [SerializeField] private float test;
     // Start is called before the first frame update
     void Awake()
     {
@@ -16,7 +21,7 @@ public class PatrolPaths : MonoBehaviour
             Instance = this;
         }
     }
-    public List<Vector3> GetPatrolPath(int ind) {
+    public PatrolPath GetPatrolPath(int ind) {
         return patrol_paths[ind];
     }
  

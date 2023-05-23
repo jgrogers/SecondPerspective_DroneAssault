@@ -29,6 +29,8 @@ public class AIControl : MonoBehaviour
     [SerializeField] private float ErrorRadius = 15.0f;
     [SerializeField] private Vector2 currentError;
     [SerializeField] private Transform goalPoint;
+    [SerializeField] private int waypointNum = 0;
+    [SerializeField] private int waypointMissionNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,7 @@ public class AIControl : MonoBehaviour
         cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
         fireControl = GetComponent<FireControl>();
         SampleDistanceError();
+        goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
     }
     private void SampleDistanceError() {
         currentError = Random.insideUnitCircle * ErrorRadius;
@@ -65,7 +68,13 @@ public class AIControl : MonoBehaviour
         } else {
             //Continue on primary mission: get to goalPoint
             if(TurnToGoal()) {
-                MoveToGoal();
+                if(MoveToGoal()) {
+                    waypointNum ++;
+                    if (waypointNum > PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints.Count) {
+                        waypointNum = 0;
+                    }
+                    goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
+                }
             }
         }
     }
