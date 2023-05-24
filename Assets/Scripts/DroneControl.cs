@@ -10,6 +10,7 @@ public class DroneControl : MonoBehaviour
     [SerializeField] private float MaxCharge = 120.0f;
     [SerializeField] private bool Launched = true;
     [SerializeField] private bool LandingMode = false;
+    [SerializeField] private BatteryIndicator batteryIndicator;
     private Rigidbody myRigidbody;
     private SphereCollider myCollider;
     private DroneDock mothershipDockingPort;
@@ -50,11 +51,15 @@ public class DroneControl : MonoBehaviour
             }
         }
     }
+    public void ReturnHomeClicked() {
+        LandingMode = true;
+    }
     private void FixedUpdate() {
         if (Launched) Charge -= Time.deltaTime; 
         else Charge += 10.0f * Time.deltaTime;
         if (Charge > MaxCharge) Charge = MaxCharge;
         if (Charge < 0f) Charge = 0f;
+        batteryIndicator.SetPercentFilled(Charge / MaxCharge);
 
         if (Charge > 0.0f) {
             if (LandingMode) {
@@ -79,25 +84,31 @@ public class DroneControl : MonoBehaviour
                 }
             }
         if (Input.GetKey(KeyCode.UpArrow)) {
+            LandingMode = false;
          myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, MotionForce));
        }
        if (Input.GetKey(KeyCode.DownArrow)) {
+            LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, -MotionForce));
        }
        if (Input.GetKey(KeyCode.LeftArrow)) {
+            LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(-MotionForce, 0.0f, 0.0f));
        }
        if (Input.GetKey(KeyCode.RightArrow)) {
+            LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(MotionForce, 0.0f, 0.0f));
        }
        if (Input.GetKey(KeyCode.PageUp)) {
         if (!Launched) {
             Takeoff();
         } else {
+            LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(0.0f, MotionForce, 0.0f));
         }
        }
        if (Input.GetKey(KeyCode.PageDown)) {
+            LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(0.0f, -MotionForce, 0.0f));
 
        }
