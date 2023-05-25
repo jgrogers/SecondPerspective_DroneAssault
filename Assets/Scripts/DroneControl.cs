@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DroneControl : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class DroneControl : MonoBehaviour
     [SerializeField] private bool Launched = true;
     [SerializeField] private bool LandingMode = false;
     [SerializeField] private BatteryIndicator batteryIndicator;
+    [SerializeField] private Button returnHomeButton;
     private Rigidbody myRigidbody;
     private SphereCollider myCollider;
     private DroneDock mothershipDockingPort;
@@ -21,6 +23,7 @@ public class DroneControl : MonoBehaviour
        myCollider = GetComponent<SphereCollider>();
        mothershipDockingPort = Mothership.GetComponent<DroneDock>();
        Land();
+       returnHomeButton.onClick.AddListener(ReturnHomeClicked);
     }
 
     void Takeoff() {
@@ -52,6 +55,7 @@ public class DroneControl : MonoBehaviour
         }
     }
     public void ReturnHomeClicked() {
+        Debug.Log("Return home clicked");
         LandingMode = true;
     }
     private void FixedUpdate() {
@@ -85,35 +89,47 @@ public class DroneControl : MonoBehaviour
             }
         if (Input.GetKey(KeyCode.UpArrow)) {
             LandingMode = false;
-         myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, MotionForce));
+            if (Launched) {
+                myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, MotionForce));
+            }
        }
        if (Input.GetKey(KeyCode.DownArrow)) {
             LandingMode = false;
-        myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, -MotionForce));
+            if (Launched) {
+                myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, -MotionForce));
+            }
        }
        if (Input.GetKey(KeyCode.LeftArrow)) {
             LandingMode = false;
-        myRigidbody.AddRelativeForce(new Vector3(-MotionForce, 0.0f, 0.0f));
+            if (Launched) {
+                myRigidbody.AddRelativeForce(new Vector3(-MotionForce, 0.0f, 0.0f));
+            }
        }
        if (Input.GetKey(KeyCode.RightArrow)) {
             LandingMode = false;
-        myRigidbody.AddRelativeForce(new Vector3(MotionForce, 0.0f, 0.0f));
+            if (Launched) {
+                myRigidbody.AddRelativeForce(new Vector3(MotionForce, 0.0f, 0.0f));
+            }
        }
        if (Input.GetKey(KeyCode.PageUp)) {
         if (!Launched) {
             Takeoff();
         } else {
             LandingMode = false;
-        myRigidbody.AddRelativeForce(new Vector3(0.0f, MotionForce, 0.0f));
+            myRigidbody.AddRelativeForce(new Vector3(0.0f, MotionForce, 0.0f));
         }
        }
        if (Input.GetKey(KeyCode.PageDown)) {
             LandingMode = false;
-        myRigidbody.AddRelativeForce(new Vector3(0.0f, -MotionForce, 0.0f));
+            if (Launched) {
+                myRigidbody.AddRelativeForce(new Vector3(0.0f, -MotionForce, 0.0f));
+            }
 
        }
         } else {
-            myRigidbody.useGravity = true;
+            if (Launched) {
+                myRigidbody.useGravity = true;
+            }
         }
      }
 }

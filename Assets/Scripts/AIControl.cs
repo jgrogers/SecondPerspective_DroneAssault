@@ -30,7 +30,8 @@ public class AIControl : MonoBehaviour
     [SerializeField] private Vector2 currentError;
     [SerializeField] private Transform goalPoint;
     [SerializeField] private int waypointNum = 0;
-    [SerializeField] private int waypointMissionNum;
+    [SerializeField] private int waypointMissionNum = -1;
+    [SerializeField] private int TreeLayer = 9;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +40,10 @@ public class AIControl : MonoBehaviour
         cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
         fireControl = GetComponent<FireControl>();
         SampleDistanceError();
-        goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
+        Debug.Log("My waypoint mission num is " + waypointMissionNum);
+        if (waypointMissionNum != -1) {
+            goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
+        }
     }
     private void SampleDistanceError() {
         currentError = Random.insideUnitCircle * ErrorRadius;
@@ -65,12 +69,12 @@ public class AIControl : MonoBehaviour
         // Fire if we are oriented correctly
         if (targetInRange && targetVisible && hostile) {
             AimAndFire();
-        } else {
+        } else if (goalPoint) {
             //Continue on primary mission: get to goalPoint
             if(TurnToGoal()) {
                 if(MoveToGoal()) {
                     waypointNum ++;
-                    if (waypointNum > PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints.Count) {
+                    if (waypointNum >= PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints.Count) {
                         waypointNum = 0;
                     }
                     goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
@@ -110,15 +114,15 @@ public class AIControl : MonoBehaviour
         
         float leftTorque = motorTorque;
         float rightTorque = motorTorque;
-        if (yaw_error < 0) leftTorque = leftTorque * Mathf.Max(1.0f, 0.3f/ yaw_error);
-        else if (yaw_error > 0) rightTorque = rightTorque * Mathf.Max(1.0f, 0.3f/ yaw_error);
+        if (yaw_error < 0) leftTorque = leftTorque * Mathf.Min(1.0f, 0.3f/ yaw_error);
+        else if (yaw_error > 0) rightTorque = rightTorque * Mathf.Min(1.0f, 0.3f/ yaw_error);
         foreach(WheelCollider wheel in leftTracks) {
             wheel.motorTorque = leftTorque;
         }
         foreach(WheelCollider wheel in rightTracks) {
             wheel.motorTorque = rightTorque;
         }
-        return direction.magnitude < 3.0f;
+        return direction.magnitude < 10.0f;
     }
     private void VerifyTargetStillExists() {
         if (!GameManager.Instance.CheckObjectExists(target)) {
@@ -136,7 +140,6 @@ public class AIControl : MonoBehaviour
                     Debug.Log("Found target " + target);
                     break;
                 } else {
-                    Debug.Log("Trying to get target but hit " + hit.transform);
                 }
             }
         }
@@ -208,5 +211,13 @@ public class AIControl : MonoBehaviour
             } 
         }
 
+    }
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.layer == TreeLayer) {
+          other.gameObject.AddComponent<Rigidbody>();
+          other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 10.0f*5f, 3.0f, ForceMode.Impulse);
+          other.gameObject.layer = 10;
+
+        }
     }
 }

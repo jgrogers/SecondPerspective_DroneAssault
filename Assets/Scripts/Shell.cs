@@ -6,6 +6,7 @@ public class Shell : MonoBehaviour
 {
     [SerializeField] private int SafeMask;
     [SerializeField] private LayerMask TargetMask;
+    [SerializeField] private int TreeLayer;
     [SerializeField] private float ImpulseAmount = 100.0f;
     [SerializeField] private float Lifespan = 10.0f;
     [SerializeField] private ParticleSystem explosionEffect;
@@ -42,12 +43,16 @@ public class Shell : MonoBehaviour
                 Debug.Log("Hit target - damaging " + other);
                 other.GetComponentInParent<Damage>().Hit(1);
             }
+            else if (other.GetComponent<Collider>().gameObject.layer == TreeLayer) {
+                other.gameObject.AddComponent<Rigidbody>();
+                other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 10.0f*5f, 3.0f, ForceMode.Impulse);
+                other.gameObject.layer = 10;
+            }
             else {
-                Debug.Log("hit : " + other.GetComponent<Collider>().gameObject.layer);
             }
             ParticleSystem explosion = ParticleSystem.Instantiate(explosionEffect, transform.position, Quaternion.identity);
             explosion.Play();
-            TerrainCraterer.Instance.MakeCraterAtWorld(transform.position);
+            if (TerrainCraterer.Instance) TerrainCraterer.Instance.MakeCraterAtWorld(transform.position);
             Destroy(gameObject);
         }
         

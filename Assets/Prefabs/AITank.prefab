@@ -168,16 +168,18 @@ MonoBehaviour:
   motorTorque: 150
   turretMoveRate: 1
   azimuth: 0
-  elevation: -15
+  elevation: 15
   azimuthGoal: 0
-  elevationGoal: -15
-  detectionRange: 50
+  elevationGoal: 15
+  detectionRange: 100
   sensorPoint: {fileID: 7314783749544742076}
   hostile: 1
   learnedDistanceScale: 0.95
   ErrorRadius: 5
   currentError: {x: 0, y: 0}
   goalPoint: {fileID: 0}
+  waypointNum: 0
+  waypointMissionNum: -1
 --- !u!146 &8613643574299037701 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 1431819558438159510, guid: 2c33a09fcd362384fbf9391d66362c18, type: 3}

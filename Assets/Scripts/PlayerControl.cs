@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform FiringPoint;
     [SerializeField] private GameObject Shell;
     [SerializeField] private float turretMoveRate = 15.0f;
+    [SerializeField] private int TreeLayer = 9;
     [SerializeField] private WheelCollider[] leftTracks;
     [SerializeField] private WheelCollider[] rightTracks;
     private float azimuth = 0.0f;
@@ -81,4 +82,13 @@ public class PlayerControl : MonoBehaviour
 
         
     }
+      private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.layer == TreeLayer) {
+          other.gameObject.AddComponent<Rigidbody>();
+          other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 10.0f*5f, 3.0f, ForceMode.Impulse);
+          other.gameObject.layer = 10;
+
+        }
+    }
+
 }

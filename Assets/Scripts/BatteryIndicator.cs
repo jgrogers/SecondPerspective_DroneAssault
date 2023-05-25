@@ -9,7 +9,6 @@ public class BatteryIndicator : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material yellowMaterial;
     [SerializeField] private Material greenMaterial;
-    [SerializeField] private float percentFilled = 1.0f;
 
     public void SetPercentFilled(float percent) {
         Material tempMaterial;
