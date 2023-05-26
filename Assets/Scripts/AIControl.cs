@@ -32,9 +32,13 @@ public class AIControl : MonoBehaviour
     [SerializeField] private int waypointNum = 0;
     [SerializeField] private int waypointMissionNum = -1;
     [SerializeField] private int TreeLayer = 9;
+    private float ShellSpeed;
     // Start is called before the first frame update
     void Start()
     {
+        ErrorRadius = GameManager.Instance.EnemyAimingErrorRadius;
+        turretMoveRate = GameManager.Instance.EnemyTurretSpeed;
+        motorTorque = GameManager.Instance.EnemyWheelTorque;
         myRigidbody = GetComponent<Rigidbody>();
         cannonRotation.transform.localRotation = Quaternion.Euler(0.0f, azimuth, 0.0f);
         cannonElevation.transform.localRotation = Quaternion.Euler(elevation, 0.0f, 0.0f);
@@ -44,10 +48,10 @@ public class AIControl : MonoBehaviour
         if (waypointMissionNum != -1) {
             goalPoint = PatrolPaths.Instance.GetPatrolPath(waypointMissionNum).waypoints[waypointNum];
         }
+        ShellSpeed = GameManager.Instance.ShellVelocity;
     }
     private void SampleDistanceError() {
         currentError = Random.insideUnitCircle * ErrorRadius;
-        
     }
     // Update is called once per frame
     void Update()
@@ -164,11 +168,11 @@ public class AIControl : MonoBehaviour
             float dz = localDirection.z + currentError.y;
             azimuthGoal = Mathf.Rad2Deg * Mathf.Atan2(dx, dz);
             float horiz_dist = learnedDistanceScale * Mathf.Sqrt(dx*dx + dz*dz);
-            float asin_value = horiz_dist * 9.81f / (30.0f * 30.0f);
+            float asin_value = horiz_dist * 9.81f / (ShellSpeed * ShellSpeed);
             if (asin_value >= 1.0f || asin_value < 0) targetInRange = false;
             else targetInRange = true;
             if(targetInRange) {
-                elevationGoal = Mathf.Rad2Deg * (0.5f * Mathf.Asin(horiz_dist * 9.81f / (30.0f * 30.0f)));
+                elevationGoal = Mathf.Rad2Deg * (0.5f * Mathf.Asin(horiz_dist * 9.81f / (ShellSpeed * ShellSpeed)));
             } else {
                 elevationGoal = 45.0f;
             }

@@ -342,7 +342,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8317441998625912935}
   - component: {fileID: 8412122838056468012}
-  - component: {fileID: 5217104169541363811}
   - component: {fileID: 6338332824723780563}
   m_Layer: 0
   m_Name: PlayerDrone
@@ -386,22 +385,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bfe02be8a1a5e7ab644d75e36c5521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &5217104169541363811
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317441998625912934}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  MotionForce: 15
+  Mothership: {fileID: 0}
+  Charge: 120
+  MaxCharge: 120
+  Launched: 1
+  LandingMode: 0
+  batteryIndicator: {fileID: 0}
+  returnHomeButton: {fileID: 0}
 --- !u!135 &6338332824723780563
 SphereCollider:
   m_ObjectHideFlags: 0

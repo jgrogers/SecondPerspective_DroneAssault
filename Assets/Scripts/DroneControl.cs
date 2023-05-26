@@ -9,7 +9,7 @@ public class DroneControl : MonoBehaviour
     [SerializeField] private Transform Mothership;
     [SerializeField] private float Charge = 120.0f;
     [SerializeField] private float MaxCharge = 120.0f;
-    [SerializeField] private bool Launched = true;
+    [SerializeField] private bool Launched = false;
     [SerializeField] private bool LandingMode = false;
     [SerializeField] private BatteryIndicator batteryIndicator;
     [SerializeField] private Button returnHomeButton;
@@ -19,11 +19,15 @@ public class DroneControl : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       myRigidbody = GetComponent<Rigidbody>(); 
        myCollider = GetComponent<SphereCollider>();
        mothershipDockingPort = Mothership.GetComponent<DroneDock>();
        Land();
        returnHomeButton.onClick.AddListener(ReturnHomeClicked);
+    }
+    void Start() {
+        MaxCharge = GameManager.Instance.DroneBatteryLife;
+        Charge = MaxCharge;
+        MotionForce = GameManager.Instance.DroneSpeed;
     }
 
     void Takeoff() {
@@ -39,13 +43,15 @@ public class DroneControl : MonoBehaviour
         myRigidbody.AddRelativeForce(new Vector3(0.0f, MotionForce, 0.0f), ForceMode.Impulse);
     }
     void Land() {
-        transform.position = mothershipDockingPort.GetDockingPort().position;
-        transform.rotation = Mothership.transform.rotation;
-        transform.SetParent(Mothership);
-        Destroy(myRigidbody);
-        Launched = false;
-        LandingMode = false;
-        myCollider.enabled = false;
+        if (Launched) {
+            transform.position = mothershipDockingPort.GetDockingPort().position;
+            transform.rotation = Mothership.transform.rotation;
+            transform.SetParent(Mothership);
+            if (myRigidbody) Destroy(myRigidbody);
+            Launched = false;
+            LandingMode = false;
+            myCollider.enabled = false;
+        }
     }
     private void OnCollisionEnter(Collision other) {
         if (Charge <=0.0f && Launched) {
@@ -55,8 +61,23 @@ public class DroneControl : MonoBehaviour
         }
     }
     public void ReturnHomeClicked() {
-        Debug.Log("Return home clicked");
-        LandingMode = true;
+        if (Launched) {
+            LandingMode = true;
+        }
+    }
+    private float WrapAngle(float angle) {
+        while (angle > 180.0f) {
+            angle -= 360.0f;
+        } while (angle < -180.0f) {
+            angle += 360.0f;
+        }
+        return  angle;
+    }
+    private float GetControlTorque(float desiredAngle, float currentAngle, float currentAngularVelocity) {
+        float error = WrapAngle(Mathf.MoveTowardsAngle(currentAngle, desiredAngle, 1.0f));
+        
+        error += Mathf.Clamp(currentAngularVelocity, -1.0f, 1.0f);
+        return Mathf.Clamp(error, -1.0f, 1.0f);
     }
     private void FixedUpdate() {
         if (Launched) Charge -= Time.deltaTime; 
@@ -66,6 +87,13 @@ public class DroneControl : MonoBehaviour
         batteryIndicator.SetPercentFilled(Charge / MaxCharge);
 
         if (Charge > 0.0f) {
+            if (Launched) {
+                //Add a righting force to make it upright again
+            Vector3 attitude = transform.rotation.eulerAngles;
+            Vector3 localAngularVelocity = transform.InverseTransformDirection(myRigidbody.angularVelocity);
+            myRigidbody.AddRelativeTorque(-GetControlTorque(0.0f, attitude.x, localAngularVelocity.x), 0f, -GetControlTorque(0.0f, attitude.z, localAngularVelocity.z), ForceMode.Force);
+
+            }
             if (LandingMode) {
                 //zero out the xz error, then drop to the docking port
                 Vector3 error = mothershipDockingPort.GetDockingPort().position - transform.position;

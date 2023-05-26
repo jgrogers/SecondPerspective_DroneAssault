@@ -27,7 +27,7 @@ public class TreeManager : MonoBehaviour
 //			}
             GameObject newTree = Instantiate(treeTypes[tree.prototypeIndex], Vector3.Scale(tree.position, terrain.size) + Terrain.activeTerrain.transform.position, Quaternion.Euler(0.0f, Mathf.Rad2Deg * tree.rotation, 0.0f));
             newTree.transform.localScale = new Vector3(tree.widthScale, tree.heightScale, tree.widthScale);
-            
+
 		}
 //		terrain.treeInstances = (TreeInstance[])instances.ToArray(typeof(TreeInstance));
                                                 

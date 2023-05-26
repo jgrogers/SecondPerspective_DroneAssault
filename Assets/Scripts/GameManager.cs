@@ -6,6 +6,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public float ShellVelocity = 50.0f;
+    public float ShellLifetime = 10.0f;
+    public float EnemyAimingErrorRadius = 10.0f;
+    public float EnemyDetectionRadius = 100.0f;
+    public float EnemyWheelTorque = 150.0f;
+    public float EnemyTurretSpeed = 20.0f;
+    public float DroneSpeed = 15.0f;
+    public float DroneBatteryLife = 120.0f;
 
     public List<GameObject> PlayerTeam;
     public List<GameObject> EnemyTeam;
