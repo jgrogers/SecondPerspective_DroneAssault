@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public float ShellVelocity = 50.0f;
 
     public List<GameObject> PlayerTeam;
     public List<GameObject> EnemyTeam;
+    
     // Start is called before the first frame update
     private void Awake() 
     { 

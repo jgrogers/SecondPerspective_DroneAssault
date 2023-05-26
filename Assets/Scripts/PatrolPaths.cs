@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class PatrolPaths : MonoBehaviour
             Destroy(gameObject);
         } else {
             Instance = this;
+        }
+        foreach (PatrolPath p in patrol_paths) {
+            foreach (Transform t in p.waypoints) {
+                t.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+            }
         }
     }
     public PatrolPath GetPatrolPath(int ind) {
