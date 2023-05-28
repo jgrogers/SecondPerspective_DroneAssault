@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -389,7 +389,6 @@ MonoBehaviour:
   redMaterial: {fileID: 2100000, guid: c625e8e1c0d3be2a49c03a822367538c, type: 2}
   yellowMaterial: {fileID: 2100000, guid: 468a3749ea27c6d3ebe32e9ad890ea2d, type: 2}
   greenMaterial: {fileID: 2100000, guid: 2de2ea9353b195fc38f99bea7c5ba3c3, type: 2}
-  percentFilled: 1
 --- !u!1 &1613457964
 GameObject:
   m_ObjectHideFlags: 0

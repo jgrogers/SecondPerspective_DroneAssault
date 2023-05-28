@@ -12,6 +12,7 @@ public class Damage : MonoBehaviour
             Camera camera = GetComponentInChildren<Camera>();
             if(camera && camera == Camera.main) {
                 camera.transform.parent = null;
+                GameManager.Instance.GameOver();
             } else {
             }
             Destroy(gameObject);

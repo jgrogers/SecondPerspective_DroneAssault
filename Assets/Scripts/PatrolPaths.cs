@@ -23,7 +23,8 @@ public class PatrolPaths : MonoBehaviour
         }
         foreach (PatrolPath p in patrol_paths) {
             foreach (Transform t in p.waypoints) {
-                t.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                MeshRenderer mr = t.gameObject.GetComponentInChildren<MeshRenderer>();
+                if (mr != null) mr.enabled = false;
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class DroneControl : MonoBehaviour
     [SerializeField] private bool LandingMode = false;
     [SerializeField] private BatteryIndicator batteryIndicator;
     [SerializeField] private Button returnHomeButton;
+    public event EventHandler onTakeoff;
+    public event EventHandler onLand;
+    public event EventHandler onFly;
     private Rigidbody myRigidbody;
     private SphereCollider myCollider;
     private DroneDock mothershipDockingPort;
@@ -21,6 +25,7 @@ public class DroneControl : MonoBehaviour
     {
        myCollider = GetComponent<SphereCollider>();
        mothershipDockingPort = Mothership.GetComponent<DroneDock>();
+       Launched = true; // Just so that the land operation works
        Land();
        returnHomeButton.onClick.AddListener(ReturnHomeClicked);
     }
@@ -41,6 +46,7 @@ public class DroneControl : MonoBehaviour
         Launched = true;
         LandingMode = false;
         myRigidbody.AddRelativeForce(new Vector3(0.0f, MotionForce, 0.0f), ForceMode.Impulse);
+        onTakeoff?.Invoke(this, EventArgs.Empty);
     }
     void Land() {
         if (Launched) {
@@ -51,6 +57,7 @@ public class DroneControl : MonoBehaviour
             Launched = false;
             LandingMode = false;
             myCollider.enabled = false;
+            onLand?.Invoke(this, EventArgs.Empty);
         }
     }
     private void OnCollisionEnter(Collision other) {
@@ -119,24 +126,28 @@ public class DroneControl : MonoBehaviour
             LandingMode = false;
             if (Launched) {
                 myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, MotionForce));
+                onFly?.Invoke(this, EventArgs.Empty);
             }
        }
        if (Input.GetKey(KeyCode.DownArrow)) {
             LandingMode = false;
             if (Launched) {
                 myRigidbody.AddRelativeForce(new Vector3(0.0f, 0.0f, -MotionForce));
+                onFly?.Invoke(this, EventArgs.Empty);
             }
        }
        if (Input.GetKey(KeyCode.LeftArrow)) {
             LandingMode = false;
             if (Launched) {
                 myRigidbody.AddRelativeForce(new Vector3(-MotionForce, 0.0f, 0.0f));
+                onFly?.Invoke(this, EventArgs.Empty);
             }
        }
        if (Input.GetKey(KeyCode.RightArrow)) {
             LandingMode = false;
             if (Launched) {
                 myRigidbody.AddRelativeForce(new Vector3(MotionForce, 0.0f, 0.0f));
+                onFly?.Invoke(this, EventArgs.Empty);
             }
        }
        if (Input.GetKey(KeyCode.PageUp)) {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -54,5 +55,13 @@ public class GameManager : MonoBehaviour
         PlayerTeam.RemoveAll(t => t == go);
         EnemyTeam.RemoveAll(t => t == go);
         Debug.Log("Have " + EnemyTeam.Count + " enemies and " + PlayerTeam.Count + " allies");
+    }
+    public void GameOver() {
+        StartCoroutine(WaitReload());
+
+    }
+    public IEnumerator WaitReload() {
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene(1);
     }
 }

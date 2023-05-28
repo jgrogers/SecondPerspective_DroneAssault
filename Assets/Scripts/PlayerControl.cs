@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,11 @@ public class PlayerControl : MonoBehaviour
     private float elevation = 15.0f;
     private FireControl fireControl;
     [SerializeField] private float motorTorque = 150.0f;
+    public event EventHandler onFireCannon;
+    public event EventHandler onForwardBack;
+    public event EventHandler onTurn;
+    public event EventHandler onTurretTurn;
+    public event EventHandler onBarrelAim;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,18 +42,22 @@ public class PlayerControl : MonoBehaviour
       float leftTorque = 0.0f;
       float rightTorque = 0.0f;
       if (Input.GetKey(KeyCode.W)) {
+        onForwardBack?.Invoke(this, EventArgs.Empty);
         leftTorque = motorTorque;
         rightTorque = motorTorque;
       }
       if (Input.GetKey(KeyCode.S)) {
+        onForwardBack?.Invoke(this, EventArgs.Empty);
         leftTorque = -motorTorque;
         rightTorque = -motorTorque;
       }
       if (Input.GetKey(KeyCode.A)) {
+        onTurn?.Invoke(this, EventArgs.Empty);
         leftTorque = -motorTorque;
         rightTorque = motorTorque;
       }
       if (Input.GetKey(KeyCode.D)) {
+        onTurn?.Invoke(this, EventArgs.Empty);
         leftTorque = motorTorque;
         rightTorque = -motorTorque;
       }
@@ -58,15 +68,19 @@ public class PlayerControl : MonoBehaviour
         wheel.motorTorque = rightTorque;
       }
        if (Input.GetKey(KeyCode.Q)) {
+        onTurretTurn?.Invoke(this, EventArgs.Empty);
         azimuth -= turretMoveRate * Time.deltaTime;
        }
        if (Input.GetKey(KeyCode.E)) {
+        onTurretTurn?.Invoke(this, EventArgs.Empty);
         azimuth += turretMoveRate * Time.deltaTime;
        }
        if (Input.GetKey(KeyCode.LeftShift)) {
+        onBarrelAim?.Invoke(this, EventArgs.Empty);
         elevation += turretMoveRate * Time.deltaTime;
        }
        if (Input.GetKey(KeyCode.LeftControl)) {
+        onBarrelAim?.Invoke(this, EventArgs.Empty);
         elevation -= turretMoveRate * Time.deltaTime;
        }
         cannonRotation.transform.localRotation = Quaternion.Euler(0.0f,  azimuth, 0.0f);
@@ -76,6 +90,7 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("Firing shell!");
             GameObject shell = Instantiate(Shell, FiringPoint.position, FiringPoint.rotation);
             shell.GetComponent<Shell>().SetSafeMask(gameObject.layer);
+            onFireCannon?.Invoke(this, EventArgs.Empty);
           } 
        }
 

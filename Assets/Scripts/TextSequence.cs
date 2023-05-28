@@ -21,6 +21,7 @@ public class TextSequence : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> textBox;
     [SerializeField] private List<Image> textBackgrounds;
     [SerializeField] private PlayerControl player;
+    [SerializeField] private DroneControl drone;
 
     // Start is called before the first frame update
     // Update is called once per frame
@@ -38,6 +39,10 @@ public class TextSequence : MonoBehaviour
         player.onTurn += onTurn;
         player.onTurretTurn += onTurretTurn;
         player.onBarrelAim += onBarrelAim;
+        drone.onFly += onFly;
+        drone.onLand += onLand;
+        drone.onTakeoff += onTakeoff;
+    
         StartCoroutine(TextSequencer());
     }
     public void onFireCannon(object origin, EventArgs e) {
@@ -54,6 +59,15 @@ public class TextSequence : MonoBehaviour
     }
     public void onBarrelAim(object origin, EventArgs e) {
         eventLabelSeen["barrel_aim"] = true;
+    }
+    public void onFly(object origin, EventArgs e) {
+        eventLabelSeen["fly"] = true;
+    }
+    public void onLand(object origin, EventArgs e) {
+        eventLabelSeen["land"] = true;
+    }
+    public void onTakeoff(object origin, EventArgs e) {
+        eventLabelSeen["takeoff"] = true;
     }
     private IEnumerator TextSequencer() {
         foreach (TextEvent e in events) {
